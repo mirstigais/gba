@@ -10,6 +10,7 @@ ARG user
 
 # Get 'make' to execute our Makefile
 RUN apt-get update && apt-get install make -y --no-install-recommends && \
+    apt-get install ffmpeg -y && \	
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

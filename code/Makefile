@@ -31,6 +31,7 @@ SOURCES		:= source img
 INCLUDES	:= include
 DATA		:=
 MUSIC		:= audio
+GRAPHICS	:= tilesets
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -84,8 +85,8 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
 ifneq ($(strip $(MUSIC)),)
-	export AUDIOFILES	:=	$(foreach dir,$(notdir $(wildcard $(MUSIC)/*.*)),$(CURDIR)/$(MUSIC)/$(dir))
-	BINFILES += soundbank.bin
+	# export AUDIOFILES	:=	$(foreach dir,$(notdir $(wildcard $(MUSIC)/*.*)),$(CURDIR)/$(MUSIC)/$(dir))
+	# BINFILES += soundbank.bin
 endif
 
 #---------------------------------------------------------------------------------
