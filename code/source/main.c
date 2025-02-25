@@ -14,6 +14,11 @@
 #include "private.h" /* for sizeof(struct gsm_state) */
 #include "gbfs.h"
 
+#include "pcx.h"
+#include "fade.h"
+#include "background_pcx.h"
+#include "splash_pcx.h"
+
 #if 0
 #define PROFILE_WAIT_Y(y) do {} while(REG_VCOUNT != (y))
 #define PROFILE_COLOR(r,g,b) (BG_COLORS[0] = RGB5((r),(g),(b)))
@@ -21,6 +26,11 @@
 #define PROFILE_WAIT_Y(y) ((void)0)
 #define PROFILE_COLOR(r,g,b) ((void)0)
 #endif
+
+//---------------------------------------------------------------------------------
+// storage space for palette data
+//---------------------------------------------------------------------------------
+u16 PaletteBuffer[256];
 
 extern const char _x16Tiles[2048];  // font
 
@@ -447,9 +457,15 @@ int main(void) {
   hud_init();
   fs = find_first_gbfs_file(find_first_gbfs_file);
   if(!fs) {
-    hud_wline(7, "Please append gsmsongs.gbfs");
-    BG_COLORS[0] = RGB5(31, 23, 23);
-    BG_COLORS[1] = RGB5(16, 0, 0);
+    SetMode( MODE_4 | BG2_ON );	
+    DecodePCX(splash_pcx, (u16*)VRAM , PaletteBuffer);
+    SetPalette(PaletteBuffer);
+
+    // hud_wline(7, "Please append gsmsongs.gbfs");
+
+    // BG_COLORS[0] = RGB5(31, 23, 23);
+    // BG_COLORS[1] = RGB5(16, 0, 0);
+
     while (1) {
       VBlankIntrWait();
     }

@@ -29,7 +29,7 @@ TARGET		:= ../out/game
 BUILD		:= build
 SOURCES		:= source img
 INCLUDES	:= include
-DATA		:=
+DATA		:= data
 MUSIC		:= audio
 GRAPHICS	:= tilesets
 
@@ -170,9 +170,17 @@ soundbank.bin soundbank.h : $(AUDIOFILES)
 # you use in the graphics folders 
 #---------------------------------------------------------------------------------
 %.s %.h	: %.png %.grit
-#---------------------------------------------------------------------------------
 
 	grit $< -fts -o$*
+#---------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------
+%.pcx.o %_pcx.h : %.pcx
+
+# 	@echo "Converting $< to $@ and generating header $*_pcx.h"
+# 	grit $< -ftc -fh -o$*
+# 	$(CC) $(CFLAGS) -c $*.c -o $*.pcx.o
+#---------------------------------------------------------------------------------
 
 	echo $(notdir $<)
 	$(bin2o)
