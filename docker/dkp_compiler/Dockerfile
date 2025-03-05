@@ -18,9 +18,11 @@ RUN apt-get update && apt-get install make -y --no-install-recommends && \
 COPY --from=dkp_downloader /opt/devkitpro /opt/devkitpro
 
 # Create new user who has the rights to the out folder where the .gba and .elf will be copied
-RUN useradd -l -d /$user -m -u $uid $user && \
-    chown -R $uid /$user && \
-    mkdir /out &&  chown -R $uid /out
+RUN if [ "$user" != "root" ]; then \
+      useradd -l -d /$user -m -u $uid $user && \
+      chown -R $uid /$user; \
+    fi && \
+    mkdir -p /out && chown -R $uid /out
 
 ENV HOME=/$user
 ENV DEVKITPRO=/opt/devkitpro
